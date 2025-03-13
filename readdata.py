@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_json('News_Category_Dataset_v3.csv', lines=True)
+df = pd.read_csv('News_Category_Dataset_v3.csv')
 
 print(df)
 
@@ -12,6 +12,8 @@ print(df.head())
 print(df.info())
 
 print(df.describe())
+
+print(df.dtypes)
 
 print(df.isnull().sum())
 
@@ -25,11 +27,18 @@ print(df[duplicates])
 
 print(duplicates.sum())
 
+df_cleaned = df.drop_duplicates().dropna()
 
-df_cleaned = df.drop_duplicates()
-print("DataFrame without duplicates")
+print("DataFrame without duplicates and missing values")
 print(df_cleaned)
 
-print(duplicates.sum())
+print("Missing values after cleaning:")
+print(df_cleaned.isnull().sum())
+
+print("Duplicate rows after cleaning:")
+print(df_cleaned.duplicated().sum())
+
+print("Original shape:", df.shape)
+print("New shape after cleaning:", df_cleaned.shape)
 
 df_cleaned.to_csv('News_Category_Dataset_v3.csv', index=False)
